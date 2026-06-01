@@ -1,7 +1,7 @@
 {
   "headers": [
     {
-      "source": "/README.md",
+      "source": "README.md",
       "headers": [
         { "key": "Content-Type", "value": "text/markdown" }
       ]
@@ -9,8 +9,8 @@
   ],
   "rewrites": [
     {
-      "source": "/README.md",
-      "destination": "/README.md"
+      "source": "README.md",
+      "destination": "README.md"
     }
   ]
 }
