@@ -1,4 +1,3 @@
-from pathlib import Path
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -36,6 +35,7 @@ regiao = sorted(df["regiao"].dropna().unique())
 uf = sorted(df["uf"].dropna().unique())
 cidade = sorted(df["cidade"].dropna().unique())
 tipo_crime = sorted(df["tipo_crime"].dropna().unique())
+periodo_dia = sorted(df["periodo_dia"].dropna().unique())
 nivel_risco = sorted(df["nivel_risco"].dropna().unique())
 
 ano_sel = st.sidebar.multiselect("Ano", options=ano, default=ano)
@@ -44,6 +44,7 @@ regiao_sel = st.sidebar.multiselect("Região", options=regiao, default=regiao)
 uf_sel = st.sidebar.multiselect("UF", options=uf, default=uf)
 cidade_sel = st.sidebar.multiselect("Cidade", options=cidade, default=cidade)
 tipo_crime_sel = st.sidebar.multiselect("Tipo de Crime", options=tipo_crime, default=tipo_crime)
+periodo_dia_sel = st.sidebar.multiselect("Período do dia", options=periodo_dia, default=periodo_dia)
 nivel_risco_sel = st.sidebar.multiselect("Nível de Risco", options=nivel_risco, default=nivel_risco)
 
 data_min = df["data"].min().date()
@@ -68,6 +69,7 @@ df_filtrado = df[
     (df["uf"].isin(uf_sel)) &
     (df["cidade"].isin(cidade_sel)) &
     (df["tipo_crime"].isin(tipo_crime_sel)) &
+    (df["periodo_dia"].isin(periodo_dia_sel)) &
     (df["nivel_risco"].isin(nivel_risco_sel)) &
     (df["data"].dt.date >= inicio) &
     (df["data"].dt.date <= fim)
@@ -149,18 +151,41 @@ with tab2:
           st.pyplot(fig)
     
       with graf_b:
-          st.subheader("Índice de violência por tipo de crime")
+          st.subheader("Crimes Mais Frequentes")
           indice_crime = (
-               df_filtrado.groupby("tipo_crime")["indice_violencia"].mean().sort_values(ascending=False).reset_index()
+               df_filtrado.groupby("tipo_crime")["ocorrencias"].sum().sort_values(ascending=False).reset_index()
           )
           fig, ax = plt.subplots(figsize=(8, 5))
 
-          sns.barplot(data=indice_crime, x="tipo_crime", y="indice_violencia", ax=ax)
-          ax.set_title("Índice de Violência por Tipo de Crime")
+          sns.barplot(data=indice_crime, x="tipo_crime", y="ocorrencias", ax=ax)
+          ax.set_title("Crimes mais frequentes")
           ax.set_ylabel("Índice de violência")
           ax.set_xlabel("Tipo de crime")
           ax.tick_params(axis="x", rotation=30)
           st.pyplot(fig)
+      
+      graf_c, graf_d = st.columns(2)
+      with graf_c:
+         st.subheader("Heatmap de Horários Críticos")
+         df_crime_critico = df_filtrado[df_filtrado['nivel_risco'] == 'Crítico']
+         filtro = df_crime_critico.groupby('periodo_dia')['nivel_risco'].count().sort_values(ascending=False).to_frame()
+         fig, ax = plt.subplots(figsize=(8, 5))
+         sns.heatmap(data=filtro)
+         ax.set_xlabel("Nível Crítico")
+         ax.set_ylabel("Período do dia")
+         st.pyplot(fig)
+
+      with graf_d:
+         st.subheader("Comparação renda X Violência")
+         renda_violencia = (
+             df[['renda_media', 'indice_violencia']]
+         )
+         fig, ax = plt.subplots(figsize=(8, 5))
+         sns.scatterplot(data=renda_violencia, x='renda_media', y='indice_violencia')
+         ax.set_xlabel("Renda Média")
+         ax.set_ylabel("Índice de Violênca")
+         st.pyplot(fig)
+
     
 with tab3:
       st.subheader("Base Filtrada")
