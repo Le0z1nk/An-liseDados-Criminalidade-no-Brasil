@@ -126,7 +126,7 @@ O dashboard possui:
 
 ---
 
-## 8. Principais Análises Desenvolvidas
+## 8. Análises Desenvolvidas
 
 ### Evolução Temporal
 
@@ -160,7 +160,7 @@ Identificação de regiões classificadas com níveis de risco Alto ou Crítico.
 
 
 
-## 9. Principais Insights Alcançados
+## 9. Insights Alcançados
 
 O projeto permite identificar:
 
