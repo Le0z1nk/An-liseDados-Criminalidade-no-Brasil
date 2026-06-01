@@ -58,8 +58,9 @@ projeto-criminalidade/
 ├── app.py
 ├── requirements.txt
 ├── README.md
-├── index.html
-│
+├── site/
+|        └── index.html
+|        └── style.css
 ├── dados/
 │   └── simulacao_criminalidade_brasil.csv
 │
