@@ -202,7 +202,7 @@ e diferenças regionais de ocorrências.
 
 st.divider()
 st.write("""
-Integrantes: Leonardo Amorim de Sousa e Guilherme Martins da Silva
-PrOfessor: Alexandre Neves Louzada
+Integrantes: Leonardo Amorim de Sousa e Guilherme Martins da Silva /
+Professor: Alexandre Neves Louzada
 """)
       
