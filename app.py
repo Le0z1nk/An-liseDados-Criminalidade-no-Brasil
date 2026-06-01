@@ -199,4 +199,10 @@ A análise permite identificar quais são as cidades mais críticas e quais são
 permitindo que gestores explorem filtros e encontrem rapidamente oportunidades de redução de criminalidade
 e diferenças regionais de ocorrências.
 """)
+
+st.divider()
+st.write("""
+Integrantes: Leonardo Amorim de Sousa e Guilherme Martins da Silva
+PrOfessor: Alexandre Neves Louzada
+""")
       
